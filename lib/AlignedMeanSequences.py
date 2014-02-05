@@ -18,16 +18,14 @@ class AlignedMeanSequences(MeanSequences):
             shiftedSeq = self._shiftSequenceBy(seq, bestFitIdx)
             
             MeanSequences._updateValues(self, shiftedSeq)
-            
-            # self.mean = ((np.array(self.mean) + np.array(shiftedSeq))*0.5).tolist()
 
     def _getBestAlignment(self, seq):
         
         if len(self.mean) < len(seq):
-            r = np.correlate([1]*10 + self.mean + [1]*10, seq, 'valid')
+            r = np.correlate(self.mean, seq, 'valid')
         else:
-            r = np.correlate(self.mean, [1]*10 + seq + [1]*10, 'valid')
-        
+            r = np.correlate(self.mean, seq, 'valid')
+
         bestFitIdx = np.argmax(r)
         return bestFitIdx
 
@@ -38,9 +36,7 @@ class AlignedMeanSequences(MeanSequences):
                 y[i] = 0
         return y
     
-       
     # DEBUG
-    def streamEnd(self):
-        
-        self.standardDev = np.array([0]*len(self.mean))
-        self._outputMeanAndDeviation()
+    # def streamEnd(self):
+        # self.standardDev = np.array([0]*len(self.mean))
+        # self._outputMeanAndDeviation()
