@@ -12,10 +12,12 @@ class SequencePartitioner(PipeTool):
 
         self.argParser.add_argument('-w', '--window', type=int,
                                     default=5,
-                                    help='set size of window')
+                                    help="""The size of the sliding
+                                    window. Default: 5.""")
         self.argParser.add_argument('-s', '--step', type=int,
                                     default=1,
-                                    help='set step size of sliding window')
+                                    help="""The step size of the sliding
+                                    window. Default: 1.""")
 
     def processLine(self, line):
 
@@ -23,7 +25,7 @@ class SequencePartitioner(PipeTool):
         start = 0
         end = start + self.args.window
 
-        while start < len(sequence):
+        while start < len(sequence) - self.args.window:
             window = sequence[start:end]
             start += self.args.step
             end = start + self.args.window
