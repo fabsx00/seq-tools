@@ -21,11 +21,7 @@ class AlignedMeanSequences(MeanSequences):
 
     def _getBestAlignment(self, seq):
         
-        if len(self.mean) < len(seq):
-            r = np.correlate(self.mean, seq, 'valid')
-        else:
-            r = np.correlate(self.mean, seq, 'valid')
-
+        r = np.correlate(self.mean, seq, 'valid')
         bestFitIdx = np.argmax(r)
         return bestFitIdx
 
